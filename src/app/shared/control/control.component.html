@@ -1,0 +1,6 @@
+<p class="control">
+    <label>{{label()}}</label>
+    <!-- ng-content alows us to insert any kind of component in any place we use it. can be used to be selected of which html 
+     component to use-->
+    <ng-content select="input, textarea" />
+</p>
