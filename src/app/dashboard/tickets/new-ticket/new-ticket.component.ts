@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, output, Output, viewChild, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../../../shared/button/button.component";
 import { ControlComponent } from "../../../shared/control/control.component";
 import { FormsModule } from '@angular/forms';
@@ -19,16 +19,16 @@ export class NewTicketComponent implements AfterViewInit, OnInit {
   // è possibile usare anche la viewchild function che ritorna un signal che lavora con qualsiasi type. usiamo () dal momento
   // che è un segnale required garantisce che l'elemento venga trovato, quindi non c'è bisogno di usare la ? notation
   private functionForm = viewChild.required<ElementRef<HTMLFormElement>>('form');
-  
-  
 
-  onSubmit(titleElement: HTMLInputElement, textArea: string) {
-    const entered = titleElement.value;
-    console.dir(entered, textArea);
+  add = output<{title: string, text:string}>();
+  
+  
+  onSubmit(titleElement: string, textArea: string) {
 
     this.form?.nativeElement.reset();
 
     this.functionForm().nativeElement.reset();
+    this.add.emit({title: titleElement, text: textArea})
   }
 
   ngOnInit(): void {
@@ -40,6 +40,5 @@ export class NewTicketComponent implements AfterViewInit, OnInit {
     console.log('after view init');
     console.log(this.form?.nativeElement);
   }
-  
 
 }
